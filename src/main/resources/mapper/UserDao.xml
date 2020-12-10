@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gudt.imis.clubmanageis.dao.UserDao">
+  <resultMap id="BaseResultMap" type="com.gudt.imis.clubmanageis.model.entity.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="user_self_description" jdbcType="VARCHAR" property="userSelfDescription" />
+    <result column="user_pwd" jdbcType="VARCHAR" property="userPwd" />
+    <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
+    <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
+    <result column="user_open_id" jdbcType="VARCHAR" property="userOpenId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_name, user_self_description, user_pwd, user_phone, user_email, user_open_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.gudt.imis.clubmanageis.model.entity.User" useGeneratedKeys="true">
+    insert into user (user_name, user_self_description, user_pwd, 
+      user_phone, user_email, user_open_id
+      )
+    values (#{userName,jdbcType=VARCHAR}, #{userSelfDescription,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, 
+      #{userPhone,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, #{userOpenId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.gudt.imis.clubmanageis.model.entity.User" useGeneratedKeys="true">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="userSelfDescription != null">
+        user_self_description,
+      </if>
+      <if test="userPwd != null">
+        user_pwd,
+      </if>
+      <if test="userPhone != null">
+        user_phone,
+      </if>
+      <if test="userEmail != null">
+        user_email,
+      </if>
+      <if test="userOpenId != null">
+        user_open_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userSelfDescription != null">
+        #{userSelfDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null">
+        #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null">
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null">
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userOpenId != null">
+        #{userOpenId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gudt.imis.clubmanageis.model.entity.User">
+    update user
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userSelfDescription != null">
+        user_self_description = #{userSelfDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null">
+        user_pwd = #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null">
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null">
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userOpenId != null">
+        user_open_id = #{userOpenId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gudt.imis.clubmanageis.model.entity.User">
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      user_self_description = #{userSelfDescription,jdbcType=VARCHAR},
+      user_pwd = #{userPwd,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_email = #{userEmail,jdbcType=VARCHAR},
+      user_open_id = #{userOpenId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

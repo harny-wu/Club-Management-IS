@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gudt.imis.clubmanageis.dao.ClubIncomeDao">
+  <resultMap id="BaseResultMap" type="com.gudt.imis.clubmanageis.model.entity.ClubIncome">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="club_id" jdbcType="VARCHAR" property="clubId" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="income_tags" jdbcType="VARCHAR" property="incomeTags" />
+    <result column="income_time" jdbcType="TIMESTAMP" property="incomeTime" />
+    <result column="income_proof" jdbcType="VARCHAR" property="incomeProof" />
+    <result column="income_reason" jdbcType="VARCHAR" property="incomeReason" />
+    <result column="income_amount" jdbcType="DECIMAL" property="incomeAmount" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, club_id, user_id, income_tags, income_time, income_proof, income_reason, income_amount, 
+    update_time, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from club_income
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from club_income
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.gudt.imis.clubmanageis.model.entity.ClubIncome" useGeneratedKeys="true">
+    insert into club_income (club_id, user_id, income_tags, 
+      income_time, income_proof, income_reason, 
+      income_amount, update_time, create_time
+      )
+    values (#{clubId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{incomeTags,jdbcType=VARCHAR}, 
+      #{incomeTime,jdbcType=TIMESTAMP}, #{incomeProof,jdbcType=VARCHAR}, #{incomeReason,jdbcType=VARCHAR}, 
+      #{incomeAmount,jdbcType=DECIMAL}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.gudt.imis.clubmanageis.model.entity.ClubIncome" useGeneratedKeys="true">
+    insert into club_income
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="clubId != null">
+        club_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="incomeTags != null">
+        income_tags,
+      </if>
+      <if test="incomeTime != null">
+        income_time,
+      </if>
+      <if test="incomeProof != null">
+        income_proof,
+      </if>
+      <if test="incomeReason != null">
+        income_reason,
+      </if>
+      <if test="incomeAmount != null">
+        income_amount,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="clubId != null">
+        #{clubId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeTags != null">
+        #{incomeTags,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeTime != null">
+        #{incomeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="incomeProof != null">
+        #{incomeProof,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeReason != null">
+        #{incomeReason,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeAmount != null">
+        #{incomeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.gudt.imis.clubmanageis.model.entity.ClubIncome">
+    update club_income
+    <set>
+      <if test="clubId != null">
+        club_id = #{clubId,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeTags != null">
+        income_tags = #{incomeTags,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeTime != null">
+        income_time = #{incomeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="incomeProof != null">
+        income_proof = #{incomeProof,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeReason != null">
+        income_reason = #{incomeReason,jdbcType=VARCHAR},
+      </if>
+      <if test="incomeAmount != null">
+        income_amount = #{incomeAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.gudt.imis.clubmanageis.model.entity.ClubIncome">
+    update club_income
+    set club_id = #{clubId,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      income_tags = #{incomeTags,jdbcType=VARCHAR},
+      income_time = #{incomeTime,jdbcType=TIMESTAMP},
+      income_proof = #{incomeProof,jdbcType=VARCHAR},
+      income_reason = #{incomeReason,jdbcType=VARCHAR},
+      income_amount = #{incomeAmount,jdbcType=DECIMAL},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
