@@ -3,8 +3,8 @@
 <mapper namespace="com.gudt.imis.clubmanageis.dao.ClubPayDao">
   <resultMap id="BaseResultMap" type="com.gudt.imis.clubmanageis.model.entity.ClubPay">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="club_id" jdbcType="VARCHAR" property="clubId" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="club_id" jdbcType="INTEGER" property="clubId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="pay_tags" jdbcType="VARCHAR" property="payTags" />
     <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
     <result column="pay_proof" jdbcType="VARCHAR" property="payProof" />
@@ -32,7 +32,7 @@
       pay_time, pay_proof, pay_reason, 
       pay_amount, update_time, create_time
       )
-    values (#{clubId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{payTags,jdbcType=VARCHAR}, 
+    values (#{clubId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{payTags,jdbcType=VARCHAR}, 
       #{payTime,jdbcType=TIMESTAMP}, #{payProof,jdbcType=VARCHAR}, #{payReason,jdbcType=VARCHAR}, 
       #{payAmount,jdbcType=DECIMAL}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
       )
@@ -70,10 +70,10 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="clubId != null">
-        #{clubId,jdbcType=VARCHAR},
+        #{clubId,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
+        #{userId,jdbcType=INTEGER},
       </if>
       <if test="payTags != null">
         #{payTags,jdbcType=VARCHAR},
@@ -102,10 +102,10 @@
     update club_pay
     <set>
       <if test="clubId != null">
-        club_id = #{clubId,jdbcType=VARCHAR},
+        club_id = #{clubId,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
-        user_id = #{userId,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="payTags != null">
         pay_tags = #{payTags,jdbcType=VARCHAR},
@@ -133,8 +133,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.gudt.imis.clubmanageis.model.entity.ClubPay">
     update club_pay
-    set club_id = #{clubId,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=VARCHAR},
+    set club_id = #{clubId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
       pay_tags = #{payTags,jdbcType=VARCHAR},
       pay_time = #{payTime,jdbcType=TIMESTAMP},
       pay_proof = #{payProof,jdbcType=VARCHAR},

@@ -6,7 +6,7 @@ import lombok.Data;
 
 /**
  * club_role
- * @wdy
+ * @author 
  */
 @Data
 public class ClubRole implements Serializable {
@@ -18,12 +18,12 @@ public class ClubRole implements Serializable {
     /**
      * 用户id
      */
-    private String userId;
+    private Integer userId;
 
     /**
      * 社团id
      */
-    private String clubId;
+    private Integer clubId;
 
     /**
      * 用户在这个社团的权限，枚举：（0：管理员，1：记账员 2：普通成员）

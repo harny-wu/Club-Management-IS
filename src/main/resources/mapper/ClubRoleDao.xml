@@ -3,8 +3,8 @@
 <mapper namespace="com.gudt.imis.clubmanageis.dao.ClubRoleDao">
   <resultMap id="BaseResultMap" type="com.gudt.imis.clubmanageis.model.entity.ClubRole">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
-    <result column="club_id" jdbcType="VARCHAR" property="clubId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="club_id" jdbcType="INTEGER" property="clubId" />
     <result column="user_role" jdbcType="INTEGER" property="userRole" />
     <result column="user_alias" jdbcType="VARCHAR" property="userAlias" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -27,7 +27,7 @@
     insert into club_role (user_id, club_id, user_role, 
       user_alias, update_time, create_time
       )
-    values (#{userId,jdbcType=VARCHAR}, #{clubId,jdbcType=VARCHAR}, #{userRole,jdbcType=INTEGER}, 
+    values (#{userId,jdbcType=INTEGER}, #{clubId,jdbcType=INTEGER}, #{userRole,jdbcType=INTEGER}, 
       #{userAlias,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
       )
   </insert>
@@ -55,10 +55,10 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
+        #{userId,jdbcType=INTEGER},
       </if>
       <if test="clubId != null">
-        #{clubId,jdbcType=VARCHAR},
+        #{clubId,jdbcType=INTEGER},
       </if>
       <if test="userRole != null">
         #{userRole,jdbcType=INTEGER},
@@ -78,10 +78,10 @@
     update club_role
     <set>
       <if test="userId != null">
-        user_id = #{userId,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="clubId != null">
-        club_id = #{clubId,jdbcType=VARCHAR},
+        club_id = #{clubId,jdbcType=INTEGER},
       </if>
       <if test="userRole != null">
         user_role = #{userRole,jdbcType=INTEGER},
@@ -100,8 +100,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.gudt.imis.clubmanageis.model.entity.ClubRole">
     update club_role
-    set user_id = #{userId,jdbcType=VARCHAR},
-      club_id = #{clubId,jdbcType=VARCHAR},
+    set user_id = #{userId,jdbcType=INTEGER},
+      club_id = #{clubId,jdbcType=INTEGER},
       user_role = #{userRole,jdbcType=INTEGER},
       user_alias = #{userAlias,jdbcType=VARCHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},

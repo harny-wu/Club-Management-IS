@@ -3,8 +3,8 @@
 <mapper namespace="com.gudt.imis.clubmanageis.dao.ClubIncomeDao">
   <resultMap id="BaseResultMap" type="com.gudt.imis.clubmanageis.model.entity.ClubIncome">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="club_id" jdbcType="VARCHAR" property="clubId" />
-    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="club_id" jdbcType="INTEGER" property="clubId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="income_tags" jdbcType="VARCHAR" property="incomeTags" />
     <result column="income_time" jdbcType="TIMESTAMP" property="incomeTime" />
     <result column="income_proof" jdbcType="VARCHAR" property="incomeProof" />
@@ -32,7 +32,7 @@
       income_time, income_proof, income_reason, 
       income_amount, update_time, create_time
       )
-    values (#{clubId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{incomeTags,jdbcType=VARCHAR}, 
+    values (#{clubId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{incomeTags,jdbcType=VARCHAR}, 
       #{incomeTime,jdbcType=TIMESTAMP}, #{incomeProof,jdbcType=VARCHAR}, #{incomeReason,jdbcType=VARCHAR}, 
       #{incomeAmount,jdbcType=DECIMAL}, #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}
       )
@@ -70,10 +70,10 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="clubId != null">
-        #{clubId,jdbcType=VARCHAR},
+        #{clubId,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
-        #{userId,jdbcType=VARCHAR},
+        #{userId,jdbcType=INTEGER},
       </if>
       <if test="incomeTags != null">
         #{incomeTags,jdbcType=VARCHAR},
@@ -102,10 +102,10 @@
     update club_income
     <set>
       <if test="clubId != null">
-        club_id = #{clubId,jdbcType=VARCHAR},
+        club_id = #{clubId,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
-        user_id = #{userId,jdbcType=VARCHAR},
+        user_id = #{userId,jdbcType=INTEGER},
       </if>
       <if test="incomeTags != null">
         income_tags = #{incomeTags,jdbcType=VARCHAR},
@@ -133,8 +133,8 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.gudt.imis.clubmanageis.model.entity.ClubIncome">
     update club_income
-    set club_id = #{clubId,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=VARCHAR},
+    set club_id = #{clubId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
       income_tags = #{incomeTags,jdbcType=VARCHAR},
       income_time = #{incomeTime,jdbcType=TIMESTAMP},
       income_proof = #{incomeProof,jdbcType=VARCHAR},

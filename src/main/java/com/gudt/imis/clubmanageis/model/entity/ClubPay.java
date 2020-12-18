@@ -7,7 +7,7 @@ import lombok.Data;
 
 /**
  * club_pay
- * @wdy
+ * @author 
  */
 @Data
 public class ClubPay implements Serializable {
@@ -19,12 +19,12 @@ public class ClubPay implements Serializable {
     /**
      * 社团id
      */
-    private String clubId;
+    private Integer clubId;
 
     /**
      * 用户id
      */
-    private String userId;
+    private Integer userId;
 
     /**
      * 支出标签

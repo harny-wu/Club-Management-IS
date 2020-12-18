@@ -3,7 +3,7 @@
 <mapper namespace="com.gudt.imis.clubmanageis.dao.ClubTagDao">
   <resultMap id="BaseResultMap" type="com.gudt.imis.clubmanageis.model.entity.ClubTag">
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="club_id" jdbcType="VARCHAR" property="clubId" />
+    <result column="club_id" jdbcType="INTEGER" property="clubId" />
     <result column="tag_name" jdbcType="VARCHAR" property="tagName" />
     <result column="tag_type" jdbcType="INTEGER" property="tagType" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
@@ -25,7 +25,7 @@
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.gudt.imis.clubmanageis.model.entity.ClubTag" useGeneratedKeys="true">
     insert into club_tag (club_id, tag_name, tag_type, 
       update_time, create_time)
-    values (#{clubId,jdbcType=VARCHAR}, #{tagName,jdbcType=VARCHAR}, #{tagType,jdbcType=INTEGER}, 
+    values (#{clubId,jdbcType=INTEGER}, #{tagName,jdbcType=VARCHAR}, #{tagType,jdbcType=INTEGER}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.gudt.imis.clubmanageis.model.entity.ClubTag" useGeneratedKeys="true">
@@ -49,7 +49,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="clubId != null">
-        #{clubId,jdbcType=VARCHAR},
+        #{clubId,jdbcType=INTEGER},
       </if>
       <if test="tagName != null">
         #{tagName,jdbcType=VARCHAR},
@@ -69,7 +69,7 @@
     update club_tag
     <set>
       <if test="clubId != null">
-        club_id = #{clubId,jdbcType=VARCHAR},
+        club_id = #{clubId,jdbcType=INTEGER},
       </if>
       <if test="tagName != null">
         tag_name = #{tagName,jdbcType=VARCHAR},
@@ -88,7 +88,7 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.gudt.imis.clubmanageis.model.entity.ClubTag">
     update club_tag
-    set club_id = #{clubId,jdbcType=VARCHAR},
+    set club_id = #{clubId,jdbcType=INTEGER},
       tag_name = #{tagName,jdbcType=VARCHAR},
       tag_type = #{tagType,jdbcType=INTEGER},
       update_time = #{updateTime,jdbcType=TIMESTAMP},

@@ -6,7 +6,7 @@ import lombok.Data;
 
 /**
  * club_tag
- * @wdy
+ * @author 
  */
 @Data
 public class ClubTag implements Serializable {
@@ -18,7 +18,7 @@ public class ClubTag implements Serializable {
     /**
      * 社团id
      */
-    private String clubId;
+    private Integer clubId;
 
     /**
      * 标签名字

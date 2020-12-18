@@ -5,10 +5,9 @@ import lombok.Data;
 
 /**
  * user
- * @wdy
+ * @author 
  */
 @Data
-
 public class User implements Serializable {
     /**
      * 自增id

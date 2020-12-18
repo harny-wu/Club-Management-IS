@@ -6,7 +6,7 @@ import lombok.Data;
 
 /**
  * club
- * @wdy
+ * @author 
  */
 @Data
 public class Club implements Serializable {
