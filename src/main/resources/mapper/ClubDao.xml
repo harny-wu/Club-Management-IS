@@ -19,7 +19,7 @@
     from club
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="SelectByInviteCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByInviteCode" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from club

@@ -16,5 +16,5 @@ public interface ClubDao {
 
     int updateByPrimaryKey(Club record);
 
-    Club SelectByInviteCode(String clubInvitecode);
+    Club selectByInviteCode(String clubInvitecode);
 }
