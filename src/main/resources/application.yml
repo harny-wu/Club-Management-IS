@@ -8,6 +8,6 @@ mybatis:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3307/clubmanage?serverTimezone=GMT%2b8
-    username: root
-    password: wu1004
+    url: jdbc:mysql://8.129.215.86:3306/club?serverTimezone=GMT%2b8
+    username: clubManage
+    password: Root1234@

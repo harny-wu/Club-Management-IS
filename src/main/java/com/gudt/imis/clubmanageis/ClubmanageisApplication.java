@@ -1,9 +1,11 @@
 package com.gudt.imis.clubmanageis;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
+@MapperScan("com.gudt.imis.clubmanageis.dao")
 public class ClubmanageisApplication {
 
     public static void main(String[] args) {
