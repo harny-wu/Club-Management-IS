@@ -14,14 +14,20 @@
     id, club_description, club_name, club_imgs, club_invitecode, update_time, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from club
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="SelectByInviteCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from club
+    where club_invitecode = #{clubInvitecode,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from club
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{clubInvitecode,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.gudt.imis.clubmanageis.model.entity.Club" useGeneratedKeys="true">
     insert into club (club_description, club_name, club_imgs, 

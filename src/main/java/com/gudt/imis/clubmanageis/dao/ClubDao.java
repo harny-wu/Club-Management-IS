@@ -1,6 +1,7 @@
 package com.gudt.imis.clubmanageis.dao;
 
 import com.gudt.imis.clubmanageis.model.entity.Club;
+import org.apache.ibatis.annotations.Param;
 
 public interface ClubDao {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +15,6 @@ public interface ClubDao {
     int updateByPrimaryKeySelective(Club record);
 
     int updateByPrimaryKey(Club record);
+
+    Club SelectByInviteCode(String clubInvitecode);
 }
