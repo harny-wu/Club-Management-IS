@@ -144,4 +144,9 @@
       create_time = #{createTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="getIncomeList" parameterType="java.lang.Integer" resultType="com.gudt.imis.clubmanageis.model.entity.ClubIncome">
+    select
+    from club_income
+    where club_id = #{clubId}
+  </select>
 </mapper>
