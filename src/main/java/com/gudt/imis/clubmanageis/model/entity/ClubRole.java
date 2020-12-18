@@ -46,4 +46,68 @@ public class ClubRole implements Serializable {
     private Date createTime;
 
     private static final long serialVersionUID = 1L;
+
+    public static final class ClubRoleBuilder {
+        private Integer id;
+        private Integer userId;
+        private Integer clubId;
+        private Integer userRole;
+        private String userAlias;
+        private Date updateTime;
+        private Date createTime;
+
+        private ClubRoleBuilder() {
+        }
+
+        public static ClubRoleBuilder aClubRole() {
+            return new ClubRoleBuilder();
+        }
+
+        public ClubRoleBuilder withId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public ClubRoleBuilder withUserId(Integer userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        public ClubRoleBuilder withClubId(Integer clubId) {
+            this.clubId = clubId;
+            return this;
+        }
+
+        public ClubRoleBuilder withUserRole(Integer userRole) {
+            this.userRole = userRole;
+            return this;
+        }
+
+        public ClubRoleBuilder withUserAlias(String userAlias) {
+            this.userAlias = userAlias;
+            return this;
+        }
+
+        public ClubRoleBuilder withUpdateTime(Date updateTime) {
+            this.updateTime = updateTime;
+            return this;
+        }
+
+        public ClubRoleBuilder withCreateTime(Date createTime) {
+            this.createTime = createTime;
+            return this;
+        }
+
+        public ClubRole build() {
+            ClubRole clubRole = new ClubRole();
+            clubRole.setId(id);
+            clubRole.setUserId(userId);
+            clubRole.setClubId(clubId);
+            clubRole.setUserRole(userRole);
+            clubRole.setUserAlias(userAlias);
+            clubRole.setUpdateTime(updateTime);
+            clubRole.setCreateTime(createTime);
+            return clubRole;
+        }
+    }
 }

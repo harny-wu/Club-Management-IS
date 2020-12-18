@@ -46,4 +46,68 @@ public class Club implements Serializable {
     private Date createTime;
 
     private static final long serialVersionUID = 1L;
+
+    public static final class ClubBuilder {
+        private Integer id;
+        private String clubDescription;
+        private String clubName;
+        private String clubImgs;
+        private String clubInvitecode;
+        private Date updateTime;
+        private Date createTime;
+
+        private ClubBuilder() {
+        }
+
+        public static ClubBuilder aClub() {
+            return new ClubBuilder();
+        }
+
+        public ClubBuilder withId(Integer id) {
+            this.id = id;
+            return this;
+        }
+
+        public ClubBuilder withClubDescription(String clubDescription) {
+            this.clubDescription = clubDescription;
+            return this;
+        }
+
+        public ClubBuilder withClubName(String clubName) {
+            this.clubName = clubName;
+            return this;
+        }
+
+        public ClubBuilder withClubImgs(String clubImgs) {
+            this.clubImgs = clubImgs;
+            return this;
+        }
+
+        public ClubBuilder withClubInvitecode(String clubInvitecode) {
+            this.clubInvitecode = clubInvitecode;
+            return this;
+        }
+
+        public ClubBuilder withUpdateTime(Date updateTime) {
+            this.updateTime = updateTime;
+            return this;
+        }
+
+        public ClubBuilder withCreateTime(Date createTime) {
+            this.createTime = createTime;
+            return this;
+        }
+
+        public Club build() {
+            Club club = new Club();
+            club.setId(id);
+            club.setClubDescription(clubDescription);
+            club.setClubName(clubName);
+            club.setClubImgs(clubImgs);
+            club.setClubInvitecode(clubInvitecode);
+            club.setUpdateTime(updateTime);
+            club.setCreateTime(createTime);
+            return club;
+        }
+    }
 }
