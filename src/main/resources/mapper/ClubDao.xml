@@ -25,6 +25,7 @@
     from club
     where club_invitecode = #{clubInvitecode,jdbcType=VARCHAR}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from club
     where id = #{clubInvitecode,jdbcType=VARCHAR}

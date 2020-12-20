@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @ClassName : ClubController
@@ -32,4 +33,17 @@ public class ClubController {
                 build();
         return clubService.createClub(club,userId);
     }
+
+    @GetMapping("/joinClubByUserId")
+    Result<Club>joinClubByUserId(@RequestParam("userId")int userId,@RequestParam("inviteCode")String inviteCode){
+        return clubService.joinClubByUserId(userId,inviteCode);
+    };
+    @GetMapping("/updateInviteCode")
+    Result<String>updateInviteCode(@RequestParam("clubId")int clubId,@RequestParam("userId")int userId){
+        return clubService.updateInviteCode(clubId,userId);
+    };
+    @GetMapping("/updateClubAvatar")
+    Result<String>updateClubAvatar(@RequestParam("userId")int userId, @RequestParam("uploadImg")MultipartFile uploadImg){
+        return clubService.updateClubAvatar(userId,uploadImg);
+    };
 }

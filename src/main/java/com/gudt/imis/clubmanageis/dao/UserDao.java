@@ -14,4 +14,6 @@ public interface UserDao {
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
+    User selectByOpenId(String openId);
 }
