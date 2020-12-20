@@ -19,6 +19,12 @@
     from user
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where user_open_id = #{userOpenId,jdbcType=VARCHAR}
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
     where id = #{id,jdbcType=INTEGER}
@@ -98,7 +104,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.gudt.imis.clubmanageis.model.entity.User">
+  <update id="updateByPrimaryKey" keyColumn="id" keyProperty="id" parameterType="com.gudt.imis.clubmanageis.model.entity.User" useGeneratedKeys="true">
     update user
     set user_name = #{userName,jdbcType=VARCHAR},
       user_self_description = #{userSelfDescription,jdbcType=VARCHAR},
