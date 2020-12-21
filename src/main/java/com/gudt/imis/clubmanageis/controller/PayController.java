@@ -21,13 +21,13 @@ import java.util.List;
 public class PayController {
     @Autowired
     private PayService payService;
-    @GetMapping(value = "getPayList")
-    public Result getPayList(@RequestParam("clubId")Integer clubId){
+    @GetMapping(value = "/getPayList")
+    public Result<List<ClubPay>> getPayList(@RequestParam("clubId")Integer clubId){
         List<ClubPay> clubPayList = payService.getPayList(clubId);
         return ResultUtil.success(clubPayList);
     }
-    @GetMapping(value = "getTotalPay")
-    public Result getTotalPay(@RequestParam("clubId")Integer clubId){
+    @GetMapping(value = "/getTotalPay")
+    public Result<Integer> getTotalPay(@RequestParam("clubId")Integer clubId){
         int totalPay = payService.getTotalPay(clubId);
         return ResultUtil.success(totalPay);
     }

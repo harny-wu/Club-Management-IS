@@ -2,10 +2,12 @@ package com.gudt.imis.clubmanageis.service.impl;
 
 import com.gudt.imis.clubmanageis.dao.ClubIncomeDao;
 import com.gudt.imis.clubmanageis.model.entity.ClubIncome;
+import com.gudt.imis.clubmanageis.model.result.Result;
 import com.gudt.imis.clubmanageis.service.IncomeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -32,5 +34,10 @@ public class IncomeServiceImpl implements IncomeService {
             totalIncome = totalIncome + clubIncome.getIncomeAmount().intValue();
         }
         return totalIncome;
+    }
+
+    @Override
+    public Result<String> createIncome(String incomeTag, BigDecimal incomeAmount, String incomeReason) {
+        return null;
     }
 }
