@@ -6,9 +6,11 @@ import com.gudt.imis.clubmanageis.service.PayService;
 import com.gudt.imis.clubmanageis.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -30,5 +32,13 @@ public class PayController {
     public Result<Integer> getTotalPay(@RequestParam("clubId")Integer clubId){
         int totalPay = payService.getTotalPay(clubId);
         return ResultUtil.success(totalPay);
+    }
+    @PostMapping("/createPay")
+    public Result<String> createPay(@RequestParam("clubId")Integer clubId,
+                            @RequestParam("userId")Integer userId,
+                            @RequestParam("payTag")String payTag,
+                            @RequestParam("payAmount")BigDecimal payAmount,
+                            @RequestParam("payReason")String payReason){
+        return payService.createPay(clubId,userId,payTag,payAmount,payReason);
     }
 }

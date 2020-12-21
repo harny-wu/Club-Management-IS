@@ -20,7 +20,7 @@ public class TagServiceImpl implements TagService {
 
     private ClubTagDao clubTagDao;
     @Override
-    public Result<String> createTag(Integer clubId, String tagName, Integer tagType) {
+    public Result createTag(Integer clubId, String tagName, Integer tagType) {
         ClubTag clubTag = new ClubTag();
         clubTag.setClubId(clubId);
         clubTag.setTagName(tagName);

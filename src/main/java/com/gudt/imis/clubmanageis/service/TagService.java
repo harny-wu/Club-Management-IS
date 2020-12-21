@@ -12,5 +12,5 @@ import org.springframework.stereotype.Service;
  **/
 @Service
 public interface TagService {
-    Result<String> createTag(Integer clubId, String tagName,Integer tagType);
+    Result createTag(Integer clubId, String tagName,Integer tagType);
 }

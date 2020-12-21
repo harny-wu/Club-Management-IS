@@ -1,8 +1,10 @@
 package com.gudt.imis.clubmanageis.service;
 
 import com.gudt.imis.clubmanageis.model.entity.ClubPay;
+import com.gudt.imis.clubmanageis.model.result.Result;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -16,4 +18,6 @@ public interface PayService {
     List<ClubPay> getPayList(Integer clubId);
 
     int getTotalPay(Integer clubId);
+
+    Result<String> createPay(Integer clubId, Integer userId, String payTag, BigDecimal payAmount, String payReason);
 }

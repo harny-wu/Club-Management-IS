@@ -18,7 +18,7 @@ public class TagController {
     @Autowired
     private TagService tagService;
     @PostMapping(value = ("/creatTag"))
-    public Result<String> createTag(@RequestParam("clubId")Integer clubId,
+    public Result createTag(@RequestParam("clubId")Integer clubId,
                                     @RequestParam("tagName")String tagName,
                                     @RequestParam("tagType")Integer tagType){
         return tagService.createTag(clubId,tagName,tagType);

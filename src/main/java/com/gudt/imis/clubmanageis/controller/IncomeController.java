@@ -35,9 +35,11 @@ public class IncomeController {
     }
     @PostMapping(value = "/createIncome")
     public Result<String> createIncome(@RequestParam("incomeTag")String incomeTag,
+                                       @RequestParam("clubId")Integer clubId,
+                                       @RequestParam("userId")Integer userId,
                                        @RequestParam("incomeAmount")BigDecimal incomeAmount,
                                        @RequestParam("incomeReason")String incomeReason) {
-        return incomeService.createIncome(incomeTag,incomeAmount,incomeReason);
+        return incomeService.createIncome(incomeTag,clubId,userId,incomeAmount,incomeReason);
 
     }
 }

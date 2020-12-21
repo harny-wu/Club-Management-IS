@@ -19,5 +19,5 @@ public interface IncomeService {
 
     int getTotalIncome(Integer clubId);
 
-    Result<String> createIncome(String incomeTag, BigDecimal incomeAmount, String incomeReason);
+    Result<String> createIncome(String incomeTag, Integer clubId, Integer userId, BigDecimal incomeAmount, String incomeReason);
 }
