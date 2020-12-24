@@ -25,13 +25,11 @@ public class IncomeController {
     private IncomeService incomeService;
     @GetMapping(value = "/getIncomeList")
     public Result<List<ClubIncome>> getIncomeList(@RequestParam("clubId")Integer clubId){
-        List<ClubIncome> clubIncomeList = incomeService.getIncomeList(clubId);
-        return ResultUtil.success(clubIncomeList);
+        return incomeService.getIncomeList(clubId);
     }
     @GetMapping(value = "/getTotalIncome")
     public Result<Integer> getTotalIncome(@RequestParam("clubId")Integer clubId){
-        int totalIncome = incomeService.getTotalIncome(clubId);
-        return ResultUtil.success(totalIncome);
+        return incomeService.getTotalIncome(clubId);
     }
     @PostMapping(value = "/createIncome")
     public Result<String> createIncome(@RequestParam("incomeTag")String incomeTag,

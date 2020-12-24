@@ -15,9 +15,9 @@ import java.util.List;
  **/
 @Service
 public interface PayService {
-    List<ClubPay> getPayList(Integer clubId);
+    Result<List<ClubPay>> getPayList(Integer clubId);
 
-    int getTotalPay(Integer clubId);
+    Result<Integer> getTotalPay(Integer clubId);
 
     Result<String> createPay(Integer clubId, Integer userId, String payTag, BigDecimal payAmount, String payReason);
 }

@@ -1,7 +1,9 @@
 package com.gudt.imis.clubmanageis.dao;
 
 import com.gudt.imis.clubmanageis.model.entity.ClubTag;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ClubTagDao {
     int deleteByPrimaryKey(Integer id);
 

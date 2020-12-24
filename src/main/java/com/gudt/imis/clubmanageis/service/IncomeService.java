@@ -15,9 +15,9 @@ import java.util.List;
  **/
 @Service
 public interface IncomeService {
-    List<ClubIncome> getIncomeList(Integer clubId);
+    Result<List<ClubIncome>> getIncomeList(Integer clubId);
 
-    int getTotalIncome(Integer clubId);
+    Result<Integer> getTotalIncome(Integer clubId);
 
     Result<String> createIncome(String incomeTag, Integer clubId, Integer userId, BigDecimal incomeAmount, String incomeReason);
 }

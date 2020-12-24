@@ -25,13 +25,11 @@ public class PayController {
     private PayService payService;
     @GetMapping(value = "/getPayList")
     public Result<List<ClubPay>> getPayList(@RequestParam("clubId")Integer clubId){
-        List<ClubPay> clubPayList = payService.getPayList(clubId);
-        return ResultUtil.success(clubPayList);
+        return payService.getPayList(clubId);
     }
     @GetMapping(value = "/getTotalPay")
     public Result<Integer> getTotalPay(@RequestParam("clubId")Integer clubId){
-        int totalPay = payService.getTotalPay(clubId);
-        return ResultUtil.success(totalPay);
+        return payService.getTotalPay(clubId);
     }
     @PostMapping("/createPay")
     public Result<String> createPay(@RequestParam("clubId")Integer clubId,

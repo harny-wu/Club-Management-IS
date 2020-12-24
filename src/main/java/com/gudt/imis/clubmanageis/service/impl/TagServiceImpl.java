@@ -5,6 +5,7 @@ import com.gudt.imis.clubmanageis.model.entity.ClubTag;
 import com.gudt.imis.clubmanageis.model.result.Result;
 import com.gudt.imis.clubmanageis.service.TagService;
 import com.gudt.imis.clubmanageis.util.ResultUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -18,6 +19,7 @@ import java.util.Date;
 @Service
 public class TagServiceImpl implements TagService {
 
+    @Autowired
     private ClubTagDao clubTagDao;
     @Override
     public Result createTag(Integer clubId, String tagName, Integer tagType) {
