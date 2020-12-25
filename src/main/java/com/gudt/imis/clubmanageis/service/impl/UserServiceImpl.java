@@ -15,8 +15,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @ClassName : UserServiceImpl
@@ -47,14 +51,45 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public Result<User> updateUserInfo(User user) {
+        if(user.getId()!=null){
         userDao.updateByPrimaryKeySelective(user);
         return ResultUtil.success(userDao.selectByPrimaryKey(user.getId()));
+        }else{
+            return ResultUtil.error(301,"userId notnull");
+        }
 
     }
 
     @Override
+    @Transactional
     public Result<String> updateUserAvatar(int userId, MultipartFile uploadImg) {
-        return null;
+        // 获取文件名
+        String fileName = uploadImg.getOriginalFilename();
+        // 获取文件的后缀名
+        String suffixName = fileName.substring(fileName.lastIndexOf("."));
+        List<String> extList = Arrays.asList(".jpg", ".png", ".jpeg", ".gif");
+        if (!extList.contains(suffixName)) {
+            return ResultUtil.error(301,"图片格式出错");
+        }
+        // 解决中文问题，liunx下中文路径，图片显示问题
+        fileName = UUID.randomUUID().toString().replace("-", "") + suffixName;
+        // 返回客户端 文件地址 URL
+        String url = "localhost:8084"+"/upload/" + fileName;
+        File dest = new File( "/springbootProject/club/image" + fileName);
+        // 检测是否存在目录
+        if (!dest.getParentFile().exists()) {
+            dest.getParentFile().mkdirs();
+        }
+        try {
+            uploadImg.transferTo(dest);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        User user=userDao.selectByPrimaryKey(userId);
+        user.setUserAvatar(url);
+        userDao.updateByPrimaryKeySelective(user);
+        return ResultUtil.success(url);
+
     }
 
     @Override
@@ -67,4 +102,20 @@ public class UserServiceImpl implements UserService {
         return ResultUtil.success(userClubRoleVo);
 
     }
+
+    @Override
+    @Transactional
+    public Result<String> updateUserClubRole(int userId1, int userId2, int clubId, int role) {
+        ClubRole clubRole1=clubRoleDao.selectByUserIdAndClubId(userId1,clubId);
+        if(clubRole1.getUserRole()!=2){
+            return ResultUtil.error(301,"error");
+        }else {
+            ClubRole clubRole2=clubRoleDao.selectByUserIdAndClubId(userId2,clubId);
+            clubRole2.setUserRole(role);
+            return ResultUtil.success();
+        }
+
+    }
+
+
 }

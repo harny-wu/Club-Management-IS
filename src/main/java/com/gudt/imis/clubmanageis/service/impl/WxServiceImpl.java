@@ -13,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -36,7 +35,7 @@ public class WxServiceImpl implements WxService {
         String openId=response.getString("openid");
         User user=userDao.selectByOpenId(openId);
         if (user==null){
-            user=User.UserBuilder.anUser().withUserOpenId(openId).build();
+            user= User.UserBuilder.anUser().withUserOpenId(openId).build();
             userDao.insertSelective(user);
             return ResultUtil.success(user);
         }else{
