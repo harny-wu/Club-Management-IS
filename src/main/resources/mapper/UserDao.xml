@@ -9,21 +9,23 @@
     <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
     <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
     <result column="user_open_id" jdbcType="VARCHAR" property="userOpenId" />
+    <result column="user_avatar" jdbcType="VARCHAR" property="userAvatar" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_name, user_self_description, user_pwd, user_phone, user_email, user_open_id
+    id, user_name, user_self_description, user_pwd, user_phone, user_email, user_open_id, 
+    user_avatar
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
-    <include refid="Base_Column_List" />
-    from user
-    where id = #{id,jdbcType=INTEGER}
-  </select>
   <select id="selectByOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from user
     where user_open_id = #{userOpenId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
@@ -31,11 +33,11 @@
   </delete>
   <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.gudt.imis.clubmanageis.model.entity.User" useGeneratedKeys="true">
     insert into user (user_name, user_self_description, user_pwd, 
-      user_phone, user_email, user_open_id
-      )
+      user_phone, user_email, user_open_id, 
+      user_avatar)
     values (#{userName,jdbcType=VARCHAR}, #{userSelfDescription,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, 
-      #{userPhone,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, #{userOpenId,jdbcType=VARCHAR}
-      )
+      #{userPhone,jdbcType=VARCHAR}, #{userEmail,jdbcType=VARCHAR}, #{userOpenId,jdbcType=VARCHAR}, 
+      #{userAvatar,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.gudt.imis.clubmanageis.model.entity.User" useGeneratedKeys="true">
     insert into user
@@ -58,6 +60,9 @@
       <if test="userOpenId != null">
         user_open_id,
       </if>
+      <if test="userAvatar != null">
+        user_avatar,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userName != null">
@@ -77,6 +82,9 @@
       </if>
       <if test="userOpenId != null">
         #{userOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="userAvatar != null">
+        #{userAvatar,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -101,17 +109,21 @@
       <if test="userOpenId != null">
         user_open_id = #{userOpenId,jdbcType=VARCHAR},
       </if>
+      <if test="userAvatar != null">
+        user_avatar = #{userAvatar,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" keyColumn="id" keyProperty="id" parameterType="com.gudt.imis.clubmanageis.model.entity.User" useGeneratedKeys="true">
+  <update id="updateByPrimaryKey" parameterType="com.gudt.imis.clubmanageis.model.entity.User">
     update user
     set user_name = #{userName,jdbcType=VARCHAR},
       user_self_description = #{userSelfDescription,jdbcType=VARCHAR},
       user_pwd = #{userPwd,jdbcType=VARCHAR},
       user_phone = #{userPhone,jdbcType=VARCHAR},
       user_email = #{userEmail,jdbcType=VARCHAR},
-      user_open_id = #{userOpenId,jdbcType=VARCHAR}
+      user_open_id = #{userOpenId,jdbcType=VARCHAR},
+      user_avatar = #{userAvatar,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
