@@ -2,6 +2,7 @@ package com.gudt.imis.clubmanageis.service.impl;
 
 import com.gudt.imis.clubmanageis.dao.ClubPayDao;
 import com.gudt.imis.clubmanageis.dao.ClubRoleDao;
+import com.gudt.imis.clubmanageis.dao.UserDao;
 import com.gudt.imis.clubmanageis.model.entity.ClubPay;
 import com.gudt.imis.clubmanageis.model.entity.ClubRole;
 import com.gudt.imis.clubmanageis.model.result.Result;
@@ -26,9 +27,15 @@ public class PayServiceImpl implements PayService {
     private ClubPayDao clubPayDao;
     @Autowired
     private ClubRoleDao clubRoleDao;
+    @Autowired
+    private UserDao userDao;
     @Override
     public Result<List<ClubPay>> getPayList(Integer clubId) {
         List<ClubPay> clubPayList = clubPayDao.getPayList(clubId);
+        for (int i = 0;i < clubPayList.size();i ++){
+            String userName = userDao.selectByPrimaryKey(clubPayList.get(i).getUserId()).getUserName();
+            clubPayList.get(i).setUserName(userName);
+        }
         return ResultUtil.success(clubPayList);
     }
 
@@ -57,7 +64,7 @@ public class PayServiceImpl implements PayService {
                 clubPay.setPayProof("默认没有");
                 clubPay.setUpdateTime(new Date());
                 clubPay.setCreateTime(new Date());
-                clubPayDao.insert(clubPay);
+                clubPayDao.insertSelective(clubPay);
                 return ResultUtil.success("success");
             } else {
                 return ResultUtil.error(405, "error");

@@ -2,6 +2,7 @@ package com.gudt.imis.clubmanageis.service.impl;
 
 import com.gudt.imis.clubmanageis.dao.ClubIncomeDao;
 import com.gudt.imis.clubmanageis.dao.ClubRoleDao;
+import com.gudt.imis.clubmanageis.dao.UserDao;
 import com.gudt.imis.clubmanageis.model.entity.Club;
 import com.gudt.imis.clubmanageis.model.entity.ClubIncome;
 import com.gudt.imis.clubmanageis.model.entity.ClubRole;
@@ -27,9 +28,15 @@ public class IncomeServiceImpl implements IncomeService {
     private ClubIncomeDao clubIncomeDao;
     @Autowired
     private ClubRoleDao clubRoleDao;
+    @Autowired
+    private UserDao userDao;
     @Override
     public Result<List<ClubIncome>> getIncomeList(Integer clubId) {
         List<ClubIncome> clubIncomeList = clubIncomeDao.getIncomeList(clubId);
+        for (int i = 0; i < clubIncomeList.size(); i++){
+            String userName = userDao.selectByPrimaryKey(clubIncomeList.get(i).getUserId()).getUserName();
+            clubIncomeList.get(i).setUserName(userName);
+        }
         return ResultUtil.success(clubIncomeList);
     }
 
@@ -58,7 +65,7 @@ public class IncomeServiceImpl implements IncomeService {
                 clubIncome.setIncomeProof("默认没有");
                 clubIncome.setCreateTime(new Date());
                 clubIncome.setUpdateTime(new Date());
-                clubIncomeDao.insert(clubIncome);
+                clubIncomeDao.insertSelective(clubIncome);
                 return ResultUtil.success("success");
             }else {
                 return ResultUtil.error(405,"error");

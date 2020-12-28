@@ -61,5 +61,10 @@ public class ClubPay implements Serializable {
      */
     private Date createTime;
 
+    /**
+     * 用户昵称
+     */
+    private String userName;
+
     private static final long serialVersionUID = 1L;
 }
