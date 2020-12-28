@@ -44,6 +44,8 @@ public class User implements Serializable {
      */
     private String userOpenId;
 
+    private String userAvatar;
+
     private static final long serialVersionUID = 1L;
 
     public static final class UserBuilder {
@@ -54,6 +56,7 @@ public class User implements Serializable {
         private String userPhone;
         private String userEmail;
         private String userOpenId;
+        private String userAvatar;
 
         private UserBuilder() {
         }
@@ -97,6 +100,11 @@ public class User implements Serializable {
             return this;
         }
 
+        public UserBuilder withUserAvatar(String userAvatar) {
+            this.userAvatar = userAvatar;
+            return this;
+        }
+
         public User build() {
             User user = new User();
             user.setId(id);
@@ -106,6 +114,7 @@ public class User implements Serializable {
             user.setUserPhone(userPhone);
             user.setUserEmail(userEmail);
             user.setUserOpenId(userOpenId);
+            user.setUserAvatar(userAvatar);
             return user;
         }
     }
