@@ -12,6 +12,7 @@ import com.gudt.imis.clubmanageis.util.https.HttpsUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
@@ -37,9 +38,20 @@ public class WxServiceImpl implements WxService {
         if (user==null){
             user= User.UserBuilder.anUser().withUserOpenId(openId).build();
             userDao.insertSelective(user);
+            user.setUserSelfDescription("1");
             return ResultUtil.success(user);
         }else{
             return ResultUtil.success(user);
         }
+    }
+
+    @Override
+    @Transactional
+    public Result wxRegister(Integer userId, String userNick, String userAvatar) {
+        User user=userDao.selectByPrimaryKey(userId);
+        user.setUserName(userNick);
+        user.setUserAvatar(userAvatar);
+        userDao.updateByPrimaryKeySelective(user);
+        return ResultUtil.success(user);
     }
 }

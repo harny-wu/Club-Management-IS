@@ -2,12 +2,8 @@ package com.gudt.imis.clubmanageis.controller;
 
 import com.gudt.imis.clubmanageis.model.result.Result;
 import com.gudt.imis.clubmanageis.service.WxService;
-import com.gudt.imis.clubmanageis.service.impl.WxServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @ClassName : WxController
@@ -19,8 +15,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class WxController {
     @Autowired
     WxService wxService;
-    @PostMapping("/wxlogin")
+    @GetMapping("/wxlogin")
     public Result wxAuthorization(@RequestParam("code")String code){
+        System.out.println(code);
         return wxService.WxLogin(code);
+    }
+    @PostMapping("/wxRegister")
+    public Result wxRegister(@RequestParam("userId")Integer userId,
+                             @RequestParam("userNick")String userNick,
+                             @RequestParam("userAvatar")String userAvatar){
+        System.out.println(userNick);
+        return wxService.wxRegister(userId,userNick,userAvatar);
     }
 }

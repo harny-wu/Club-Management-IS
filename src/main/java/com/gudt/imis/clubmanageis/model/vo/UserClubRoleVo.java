@@ -29,10 +29,6 @@ public class UserClubRoleVo {
     private String userSelfDescription;
 
 
-    /**
-     * 用户手机
-     */
-    private String userPhone;
 
     /**
      * 用户邮箱
@@ -55,11 +51,6 @@ public class UserClubRoleVo {
      */
     private String clubName;
 
-    /**
-     * 列表存储[img1,img2….]社团首页展示图片
-     */
-    private String clubImgs;
-
 
     /**
      * 用户在这个社团的权限，枚举：（0：管理员，1：记账员 2：普通成员）
@@ -75,7 +66,6 @@ public class UserClubRoleVo {
         UserClubRoleVo userclubRoleVo=new UserClubRoleVo();
         userclubRoleVo.setUserId(user.getId());
         userclubRoleVo.setUserName(user.getUserName());
-        userclubRoleVo.setUserPhone(user.getUserPhone());
         userclubRoleVo.setUserEmail(user.getUserEmail());
         userclubRoleVo.setUserSelfDescription(user.getUserSelfDescription());
         userclubRoleVo.setUserRole(clubRole.getUserRole());
@@ -83,7 +73,6 @@ public class UserClubRoleVo {
         userclubRoleVo.setClubId(club.getId());
         userclubRoleVo.setClubName(club.getClubName());
         userclubRoleVo.setClubDescription(club.getClubDescription());
-        userclubRoleVo.setClubImgs(club.getClubImgs());
         return userclubRoleVo;
     }
 }

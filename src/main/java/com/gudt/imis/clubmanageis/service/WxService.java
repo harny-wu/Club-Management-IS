@@ -10,4 +10,5 @@ import com.gudt.imis.clubmanageis.model.result.Result;
  */
 public interface WxService {
     Result WxLogin(String code);
+    Result wxRegister(Integer userId,String userNick,String userAvatar);
 }
