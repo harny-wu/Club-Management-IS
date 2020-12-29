@@ -2,6 +2,7 @@ package com.gudt.imis.clubmanageis.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -11,7 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @Date: 2020-12-23 20:41
  */
 @Configuration
-public class WebMvcConfig  implements WebMvcConfigurer {
+public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         /**
@@ -19,6 +20,6 @@ public class WebMvcConfig  implements WebMvcConfigurer {
          * addResourceHandler：访问映射路径
          * addResourceLocations：资源绝对路径
          */
-        registry.addResourceHandler("/upload/**").addResourceLocations("/springbootProject/club/image");
+        registry.addResourceHandler("/clubImg/**").addResourceLocations("file:/springbootProject/club/image/clubImg/");
     }
 }

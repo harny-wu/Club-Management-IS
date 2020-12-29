@@ -24,4 +24,6 @@ public interface ClubRoleDao {
     ClubRole selectByUserIdAndClubId(Integer userId,Integer clubId);
 
     List<ClubRole>selectByUserId(Integer userId);
+
+    List<ClubRole>selectByClubId(Integer clubId);
 }

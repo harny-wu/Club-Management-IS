@@ -25,6 +25,12 @@
     from club_role
     where user_id = #{userId,jdbcType=INTEGER}
   </select>
+  <select id="selectByClubId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from club_role
+    where club_id = #{ClubId,jdbcType=INTEGER}
+  </select>
   <select id="selectByUserIdAndClubId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

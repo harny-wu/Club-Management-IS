@@ -1,12 +1,16 @@
 package com.gudt.imis.clubmanageis.service.impl;
-
+import com.gudt.imis.clubmanageis.config.PathConfig;
 import com.gudt.imis.clubmanageis.dao.ClubDao;
 import com.gudt.imis.clubmanageis.dao.ClubRoleDao;
+import com.gudt.imis.clubmanageis.dao.UserDao;
 import com.gudt.imis.clubmanageis.model.ClubRoleEnum;
 import com.gudt.imis.clubmanageis.model.entity.Club;
 import com.gudt.imis.clubmanageis.model.entity.ClubRole;
+import com.gudt.imis.clubmanageis.model.entity.User;
 import com.gudt.imis.clubmanageis.model.result.Result;
+import com.gudt.imis.clubmanageis.model.vo.UserClubRoleVo;
 import com.gudt.imis.clubmanageis.service.ClubService;
+import com.gudt.imis.clubmanageis.util.FileUploadUtil;
 import com.gudt.imis.clubmanageis.util.ResultUtil;
 import com.gudt.imis.clubmanageis.util.ShareCodeUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @ClassName : ClubServiceImpl
@@ -28,10 +35,13 @@ public class ClubServiceImpl implements ClubService {
     @Autowired
     ClubDao clubDao;
     @Autowired
+    UserDao userDao;
+    @Autowired
     ClubRoleDao clubRoleDao;
 
     @Override
     @Transactional
+    //todo:加一个功能限制用户创建社团数量的功能
     public Result<Club> createClub(Club club, int userId) {
         //插入社团信息,获得社团主键
         if (clubDao.insertSelective(club) > 0) {
@@ -53,21 +63,41 @@ public class ClubServiceImpl implements ClubService {
     @Override
     @Transactional
     public Result<Club> joinClubByUserId(int userId, String inviteCode) {
-
         Club club = clubDao.selectByInviteCode(inviteCode);
-        if (club != null) {
-            ClubRole clubRole = ClubRole.ClubRoleBuilder.aClubRole()
-                            .withUserId(userId)
-                            .withClubId(club.getId())
-                            .withUserRole(ClubRoleEnum.ORDINARYMEMBER.getCode()).build();
-            if (clubRoleDao.insertSelective(clubRole)>0){
-                return ResultUtil.success(club);
-            }else {
-                return ResultUtil.error(500, "other eror");
+        ClubRole clubRole=clubRoleDao.selectByUserIdAndClubId(userId,club.getId());
+        //判断用户是否已经加入该社团
+        if (clubRole!=null){
+            if (club != null) {
+                ClubRole newclubRole = ClubRole.ClubRoleBuilder.aClubRole()
+                        .withUserId(userId)
+                        .withClubId(club.getId())
+                        .withUserRole(ClubRoleEnum.ORDINARYMEMBER.getCode()).build();
+                if (clubRoleDao.insertSelective(newclubRole)>0){
+                    return ResultUtil.success(club);
+                }else {
+                    return ResultUtil.error(500, "other eror");
+                }
+            } else {
+                return ResultUtil.error(301, "invitecode error");
             }
-        } else {
-            return ResultUtil.error(301, "invitecode error");
+        }else{
+            return ResultUtil.error(301, "You're already in the club");
         }
+
+    }
+
+    @Override
+    @Transactional
+    public Result<List<UserClubRoleVo>> getClubAllUser(int clubId) {
+        Club club=clubDao.selectByPrimaryKey(clubId);
+        List<ClubRole>clubRoles=clubRoleDao.selectByClubId(clubId);
+        List<UserClubRoleVo>userClubRoleVos=new ArrayList<>();
+        User user;
+        for (ClubRole clubRole : clubRoles){
+            user=userDao.selectByPrimaryKey(clubRole.getUserId());
+            userClubRoleVos.add(UserClubRoleVo.getUserClubRoleVo(user,club,clubRole));
+        }
+        return ResultUtil.success(userClubRoleVos);
     }
 
     @Override
@@ -86,8 +116,21 @@ public class ClubServiceImpl implements ClubService {
     }
 
     @Override
-    public Result<String> updateClubAvatar(int userId, MultipartFile uploadImg) {
-        return null;
+    public Result<String> updateClubAvatar(int userId,int clubId, MultipartFile uploadImg) {
+        ClubRole clubRole=clubRoleDao.selectByUserIdAndClubId(userId,clubId);
+        if (clubRole.getUserRole()==ClubRoleEnum.MANAGE.getCode()){
+            Club club=clubDao.selectByPrimaryKey(clubId);
+            String path= PathConfig.CLUBUPLOADFILEPATH;
+            String finalFileName=FileUploadUtil.UploadFile(uploadImg,path);
+            if (finalFileName!=null){
+                String clubImgUrl=PathConfig.MYURL+PathConfig.UPLOADPATHMAPPING+finalFileName;
+                club.setClubImgs(clubImgUrl);
+                clubDao.updateByPrimaryKeySelective(club);
+                return ResultUtil.success(clubImgUrl);
+            }
+            return ResultUtil.error(301,"error");
+        }else{
+            return ResultUtil.error(301,"insufficient permissions");
+        }
     }
-
 }
