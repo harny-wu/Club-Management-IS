@@ -51,7 +51,7 @@ public class PayServiceImpl implements PayService {
 
     @Override
     public Result<String> createPay(Integer clubId, Integer userId, String payTag, BigDecimal payAmount, String payReason) {
-        ClubRole clubRole = clubRoleDao.selectByUserIdAndClubId(clubId, userId);
+        ClubRole clubRole = clubRoleDao.selectByUserIdAndClubId(userId, clubId);
         if (clubRole != null) {
             Integer userRole = clubRole.getUserRole();
             if (userRole == 0 || userRole == 1) {
