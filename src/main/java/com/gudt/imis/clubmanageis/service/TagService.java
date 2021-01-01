@@ -17,5 +17,5 @@ import java.util.List;
 public interface TagService {
     Result createTag(Integer clubId, String tagName,Integer tagType);
 
-    Result<List<ClubTag>> getTagList();
+    Result<List<ClubTag>> getTagList(Integer clubId);
 }

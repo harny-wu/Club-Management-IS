@@ -100,5 +100,6 @@
     <include refid="Base_Column_List" />
     from
     club_tag
+    where club_id =#{clubId,jdbcType=INTEGER}
   </select>
 </mapper>

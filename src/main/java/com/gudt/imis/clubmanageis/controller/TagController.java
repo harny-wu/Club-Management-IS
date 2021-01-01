@@ -22,8 +22,8 @@ public class TagController {
     private TagService tagService;
 
     @PostMapping("/getTagList")
-    public Result<List<ClubTag>> getTagList(){
-        return tagService.getTagList();
+    public Result<List<ClubTag>> getTagList(@RequestParam("clubId")Integer clubId){
+        return tagService.getTagList(clubId);
     }
     @PostMapping(value = ("/creatTag"))
     public Result createTag(@RequestParam("clubId")Integer clubId,

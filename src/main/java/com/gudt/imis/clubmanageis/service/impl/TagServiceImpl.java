@@ -35,8 +35,8 @@ public class TagServiceImpl implements TagService {
     }
 
     @Override
-    public Result<List<ClubTag>> getTagList() {
-        List<ClubTag> clubTagList=clubTagDao.getTagList();
+    public Result<List<ClubTag>> getTagList(Integer clubId) {
+        List<ClubTag> clubTagList=clubTagDao.getTagList(clubId);
         return ResultUtil.success(clubTagList);
     }
 }

@@ -19,5 +19,5 @@ public interface ClubTagDao {
 
     int updateByPrimaryKey(ClubTag record);
 
-    List<ClubTag> getTagList();
+    List<ClubTag> getTagList(Integer clubId);
 }
