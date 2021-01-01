@@ -40,13 +40,13 @@ public class PayServiceImpl implements PayService {
     }
 
     @Override
-    public Result<Integer> getTotalPay(Integer clubId) {
+    public Result<BigDecimal> getTotalPay(Integer clubId) {
         List<ClubPay> clubPayList = clubPayDao.getPayList(clubId);
-        Integer totalPay = 0;
+        BigDecimal totalPay = new BigDecimal(0);
         for (ClubPay clubPay:clubPayList){
-            totalPay = totalPay + clubPay.getPayAmount().intValue();
+            totalPay = totalPay.add(clubPay.getPayAmount());
         }
-        return ResultUtil.success(clubId);
+        return ResultUtil.success(totalPay);
     }
 
     @Override

@@ -41,11 +41,11 @@ public class IncomeServiceImpl implements IncomeService {
     }
 
     @Override
-    public Result<Integer> getTotalIncome(Integer clubId) {
-        Integer totalIncome = 0;
+    public Result<BigDecimal> getTotalIncome(Integer clubId) {
+        BigDecimal totalIncome = new BigDecimal(0);
         List<ClubIncome> clubIncomeList = clubIncomeDao.getIncomeList(clubId);
         for (ClubIncome clubIncome:clubIncomeList){
-            totalIncome = totalIncome + clubIncome.getIncomeAmount().intValue();
+            totalIncome = totalIncome.add(clubIncome.getIncomeAmount());
         }
         return ResultUtil.success(totalIncome);
     }

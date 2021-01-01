@@ -28,7 +28,7 @@ public class IncomeController {
         return incomeService.getIncomeList(clubId);
     }
     @GetMapping(value = "/getTotalIncome")
-    public Result<Integer> getTotalIncome(@RequestParam("clubId")Integer clubId){
+    public Result<BigDecimal> getTotalIncome(@RequestParam("clubId")Integer clubId){
         return incomeService.getTotalIncome(clubId);
     }
     @PostMapping(value = "/createIncome")

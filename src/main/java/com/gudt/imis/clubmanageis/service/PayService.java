@@ -17,7 +17,7 @@ import java.util.List;
 public interface PayService {
     Result<List<ClubPay>> getPayList(Integer clubId);
 
-    Result<Integer> getTotalPay(Integer clubId);
+    Result<BigDecimal> getTotalPay(Integer clubId);
 
     Result<String> createPay(Integer clubId, Integer userId, String payTag, BigDecimal payAmount, String payReason);
 }

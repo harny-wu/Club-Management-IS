@@ -28,7 +28,7 @@ public class PayController {
         return payService.getPayList(clubId);
     }
     @GetMapping(value = "/getTotalPay")
-    public Result<Integer> getTotalPay(@RequestParam("clubId")Integer clubId){
+    public Result<BigDecimal> getTotalPay(@RequestParam("clubId")Integer clubId){
         return payService.getTotalPay(clubId);
     }
     @PostMapping("/createPay")
