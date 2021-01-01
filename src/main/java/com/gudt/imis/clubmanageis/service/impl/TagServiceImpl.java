@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * @ClassName: TagServiceImpl
@@ -31,5 +32,11 @@ public class TagServiceImpl implements TagService {
         clubTag.setUpdateTime(new Date());
         clubTagDao.insert(clubTag);
         return ResultUtil.success();
+    }
+
+    @Override
+    public Result<List<ClubTag>> getTagList() {
+        List<ClubTag> clubTagList=clubTagDao.getTagList();
+        return ResultUtil.success(clubTagList);
     }
 }
