@@ -15,4 +15,6 @@ public interface UserService {
     Result<String> updateUserAvatar(int userId, MultipartFile uploadImg);
     Result<UserClubRoleVo> getUserClubAndRole(int userId,int clubId);
     Result<String>updateUserClubRole(int userId1,int userId2,int clubId,int role);
+    Result<List<UserClubRoleVo>>getAllUserByClubId(int clubId);
+    Result<String>getInviteCode(int userId,int clubId);
 }

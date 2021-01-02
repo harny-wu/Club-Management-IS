@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -56,7 +57,7 @@ public class ClubServiceImpl implements ClubService {
             clubDao.updateByPrimaryKeySelective(club);
             return ResultUtil.success(club);
         } else {
-            return ResultUtil.error(301, "please retry");
+            return ResultUtil.error(500, "");
         }
     }
 
@@ -66,8 +67,8 @@ public class ClubServiceImpl implements ClubService {
         Club club = clubDao.selectByInviteCode(inviteCode);
         ClubRole clubRole=clubRoleDao.selectByUserIdAndClubId(userId,club.getId());
         //判断用户是否已经加入该社团
-        if (clubRole!=null){
-            if (club != null) {
+        if (club!=null){
+            if (clubRole == null) {
                 ClubRole newclubRole = ClubRole.ClubRoleBuilder.aClubRole()
                         .withUserId(userId)
                         .withClubId(club.getId())
@@ -75,13 +76,13 @@ public class ClubServiceImpl implements ClubService {
                 if (clubRoleDao.insertSelective(newclubRole)>0){
                     return ResultUtil.success(club);
                 }else {
-                    return ResultUtil.error(500, "other eror");
+                    return ResultUtil.error(500, "");
                 }
             } else {
-                return ResultUtil.error(301, "invitecode error");
+                return ResultUtil.error(400, "你已经在社团内了");
             }
         }else{
-            return ResultUtil.error(301, "You're already in the club");
+            return ResultUtil.error(400, "邀请码错误");
         }
 
     }
@@ -111,26 +112,35 @@ public class ClubServiceImpl implements ClubService {
             clubDao.updateByPrimaryKeySelective(club);
             return ResultUtil.success(newInviteCode);
         }else{
-            return ResultUtil.error(301,"invitecode error");
+            return ResultUtil.error(400,"邀请码错误");
         }
     }
 
     @Override
     public Result<String> updateClubAvatar(int userId,int clubId, MultipartFile uploadImg) {
+        // 获取文件名
+        String fileName = uploadImg.getOriginalFilename();
+        // 获取文件的后缀名
+        String suffixName = fileName.substring(fileName.lastIndexOf("."));
+        List<String> extList = Arrays.asList(".jpg", ".png", ".jpeg", ".gif");
+        if (!extList.contains(suffixName)) {
+            return ResultUtil.error(400,"图片格式出错");
+        }
+
         ClubRole clubRole=clubRoleDao.selectByUserIdAndClubId(userId,clubId);
         if (clubRole.getUserRole()==ClubRoleEnum.MANAGE.getCode()){
             Club club=clubDao.selectByPrimaryKey(clubId);
             String path= PathConfig.CLUBUPLOADFILEPATH;
             String finalFileName=FileUploadUtil.UploadFile(uploadImg,path);
             if (finalFileName!=null){
-                String clubImgUrl=PathConfig.MYURL+PathConfig.UPLOADPATHMAPPING+finalFileName;
+                String clubImgUrl=PathConfig.MYURL+PathConfig.CLUBUPLOADPATHMAPPING+finalFileName;
                 club.setClubImgs(clubImgUrl);
                 clubDao.updateByPrimaryKeySelective(club);
                 return ResultUtil.success(clubImgUrl);
             }
-            return ResultUtil.error(301,"error");
+            return ResultUtil.error(500,"上传图片失败");
         }else{
-            return ResultUtil.error(301,"insufficient permissions");
+            return ResultUtil.error(400,"权限不足");
         }
     }
 }

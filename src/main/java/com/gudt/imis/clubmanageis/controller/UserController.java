@@ -52,4 +52,14 @@ public class UserController {
                                              @RequestParam("role")int role) {
         return userService.updateUserClubRole(userId1,userId2,clubId,role);
     }
+
+    @GetMapping("/getClubAllUsers")
+    public Result<List<UserClubRoleVo>>getClubAllUsers(@RequestParam("clubId")int clubId){
+        return userService.getAllUserByClubId(clubId);
+    }
+
+    @GetMapping("/getInviteCode")
+    public Result<String>getInviteCode(@RequestParam("userId")int userId,@RequestParam("clubId")int clubId){
+        return userService.getInviteCode(userId,clubId);
+    }
 }

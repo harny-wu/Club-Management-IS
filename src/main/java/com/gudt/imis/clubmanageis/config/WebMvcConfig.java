@@ -21,5 +21,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
          * addResourceLocations：资源绝对路径
          */
         registry.addResourceHandler("/clubImg/**").addResourceLocations("file:/springbootProject/club/image/clubImg/");
+        registry.addResourceHandler("/userImg/**").addResourceLocations("file:/springbootProject/club/image/userImg/");
     }
 }

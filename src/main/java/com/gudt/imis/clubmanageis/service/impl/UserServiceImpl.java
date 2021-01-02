@@ -1,14 +1,17 @@
 package com.gudt.imis.clubmanageis.service.impl;
 
+import com.gudt.imis.clubmanageis.config.PathConfig;
 import com.gudt.imis.clubmanageis.dao.ClubDao;
 import com.gudt.imis.clubmanageis.dao.ClubRoleDao;
 import com.gudt.imis.clubmanageis.dao.UserDao;
+import com.gudt.imis.clubmanageis.model.ClubRoleEnum;
 import com.gudt.imis.clubmanageis.model.entity.Club;
 import com.gudt.imis.clubmanageis.model.entity.ClubRole;
 import com.gudt.imis.clubmanageis.model.entity.User;
 import com.gudt.imis.clubmanageis.model.result.Result;
 import com.gudt.imis.clubmanageis.model.vo.UserClubRoleVo;
 import com.gudt.imis.clubmanageis.service.UserService;
+import com.gudt.imis.clubmanageis.util.FileUploadUtil;
 import com.gudt.imis.clubmanageis.util.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,7 +58,7 @@ public class UserServiceImpl implements UserService {
         userDao.updateByPrimaryKeySelective(user);
         return ResultUtil.success(userDao.selectByPrimaryKey(user.getId()));
         }else{
-            return ResultUtil.error(301,"userId notnull");
+            return ResultUtil.error(405,"用户id为空");
         }
 
     }
@@ -69,26 +72,25 @@ public class UserServiceImpl implements UserService {
         String suffixName = fileName.substring(fileName.lastIndexOf("."));
         List<String> extList = Arrays.asList(".jpg", ".png", ".jpeg", ".gif");
         if (!extList.contains(suffixName)) {
-            return ResultUtil.error(301,"图片格式出错");
-        }
-        // 解决中文问题，liunx下中文路径，图片显示问题
-        fileName = UUID.randomUUID().toString().replace("-", "") + suffixName;
-        // 返回客户端 文件地址 URL
-        String url = "localhost:8084"+"/upload/" + fileName;
-        File dest = new File( "/springbootProject/club/image" + fileName);
-        // 检测是否存在目录
-        if (!dest.getParentFile().exists()) {
-            dest.getParentFile().mkdirs();
-        }
-        try {
-            uploadImg.transferTo(dest);
-        } catch (IOException e) {
-            e.printStackTrace();
+            return ResultUtil.error(400,"图片格式出错");
         }
         User user=userDao.selectByPrimaryKey(userId);
-        user.setUserAvatar(url);
-        userDao.updateByPrimaryKeySelective(user);
-        return ResultUtil.success(url);
+        if(user!=null){
+            String path= PathConfig.USERUPLOADFILEPATH;
+            String finalFileName= FileUploadUtil.UploadFile(uploadImg,path);
+            if (finalFileName!=null){
+                String userImg=PathConfig.MYURL+PathConfig.USERUPLOADPATHMAPPING+finalFileName;
+                user.setUserAvatar(finalFileName);
+                userDao.updateByPrimaryKeySelective(user);
+                return ResultUtil.success(userImg);
+            }
+            else{
+                return ResultUtil.error(500,"上传失败，请重试");
+            }
+        }else{
+            return ResultUtil.error(401,"用户不存在");
+        }
+
 
     }
 
@@ -107,15 +109,45 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public Result<String> updateUserClubRole(int userId1, int userId2, int clubId, int role) {
         ClubRole clubRole1=clubRoleDao.selectByUserIdAndClubId(userId1,clubId);
-        if(clubRole1.getUserRole()!=2){
-            return ResultUtil.error(301,"error");
+        if(clubRole1.getUserRole()!= ClubRoleEnum.MANAGE.getCode()){
+            return ResultUtil.error(400,"用户权限不足");
         }else {
             ClubRole clubRole2=clubRoleDao.selectByUserIdAndClubId(userId2,clubId);
             clubRole2.setUserRole(role);
-            return ResultUtil.success();
+            clubRoleDao.updateByPrimaryKeySelective(clubRole2);
+            return ResultUtil.success(clubRole2);
         }
 
     }
 
+    @Override
+    @Transactional
+    public Result<List<UserClubRoleVo>> getAllUserByClubId(int clubId) {
+        List<ClubRole>clubRoles=clubRoleDao.selectByClubId(clubId);
+        List<UserClubRoleVo>userClubRoleVoList=new ArrayList<>();
+        UserClubRoleVo userClubRoleVoTemp=new UserClubRoleVo();
+        Club club=clubDao.selectByPrimaryKey(clubId);
+        for(ClubRole clubRole : clubRoles){
+            User user=userDao.selectByPrimaryKey(clubRole.getUserId());
+            userClubRoleVoTemp=UserClubRoleVo.getUserClubRoleVo(user,club,clubRole);
+            userClubRoleVoList.add(userClubRoleVoTemp);
+        }
+        return ResultUtil.success(userClubRoleVoList);
+    }
 
+    @Override
+    @Transactional
+    public Result<String> getInviteCode(int userId, int clubId) {
+        ClubRole clubRole=clubRoleDao.selectByUserIdAndClubId(userId,clubId);
+        if (clubRole!=null){
+            if (clubRole.getUserRole()==ClubRoleEnum.MANAGE.getCode()){
+                Club club=clubDao.selectByPrimaryKey(clubId);
+                return ResultUtil.success(club.getClubInvitecode());
+            }else{
+                return ResultUtil.error(401,"用户权限不足");
+            }
+        }else{
+            return ResultUtil.error(401,"参数错误");
+        }
+    }
 }
